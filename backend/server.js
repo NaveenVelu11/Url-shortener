@@ -13,16 +13,20 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI)
-.then(()=> console.log("MongoDB Connected"))
-.catch(err=> console.log(err));
+if (!process.env.MONGO_URI) {
+  console.error("FATAL ERROR: MONGO_URI is not defined. Please check your Vercel Environment Variables.");
+} else {
+  mongoose.connect(process.env.MONGO_URI)
+    .then(()=> console.log("MongoDB Connected"))
+    .catch(err=> console.error("MongoDB Connection Error:", err));
+}
 
 app.use("/api", urlRoutes);
 app.get("/:shortCode", urlController.redirectUrl);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ error: "Something went wrong" });
+  res.status(500).json({ error: "Something went wrong", details: err.message, stack: err.stack });
 });
 
 const PORT = process.env.PORT || 5002;

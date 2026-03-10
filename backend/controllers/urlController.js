@@ -54,7 +54,7 @@ exports.shortenUrl = async (req, res) => {
       expiresAt
     });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "Server error", details: error.message, stack: error.stack });
   }
 };
 
@@ -93,7 +93,7 @@ exports.redirectUrl = async (req, res) => {
 
     res.redirect(url.originalUrl);
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "Server error", details: error.message, stack: error.stack });
   }
 };
 
@@ -119,7 +119,7 @@ exports.getAnalytics = async (req, res) => {
 
     res.json(analytics);
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "Server error", details: error.message, stack: error.stack });
   }
 };
 
@@ -146,6 +146,6 @@ exports.generateQR = async (req, res) => {
 
     res.json({ qrCode: qrCodeDataUrl });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "Server error", details: error.message, stack: error.stack });
   }
 };
