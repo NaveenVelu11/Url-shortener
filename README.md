@@ -1,8 +1,8 @@
-# URL Shortener Pro 🔗
+# URL Shortener  🔗
 
 A professional, production-ready URL shortener with analytics, QR codes, and modern UI/UX.
 
-## Features ✨
+## Features 
 
 - **URL Shortening**: Convert long URLs into short, shareable links
 - **Custom Aliases**: Create memorable custom short codes
@@ -14,7 +14,7 @@ A professional, production-ready URL shortener with analytics, QR codes, and mod
 - **Copy to Clipboard**: One-click copy functionality
 - **Security**: Helmet.js, input validation, and sanitization
 
-## Tech Stack 🛠️
+## Tech Stack 
 
 ### Backend
 - Node.js + Express
@@ -30,7 +30,7 @@ A professional, production-ready URL shortener with analytics, QR codes, and mod
 - Modern CSS with animations
 - Responsive design
 
-## Installation 📦
+## Installation 
 
 ### Prerequisites
 - Node.js (v14+)
@@ -45,7 +45,7 @@ npm install
 
 Create `.env` file:
 ```
-MONGO_URI=mongodb://localhost:27017/urlshortener
+MONGO_URI=mongodb://localhost:27017
 BASE_URL=http://localhost:5002
 PORT=5002
 ```
@@ -63,7 +63,7 @@ npm install
 npm start
 ```
 
-## API Endpoints 🌐
+## API Endpoints 
 
 ### POST /api/shorten
 Create shortened URL
@@ -84,7 +84,7 @@ Get analytics for shortened URL
 ### GET /api/qr/:shortCode
 Get QR code for shortened URL
 
-## System Design 🏗️
+## System Design 
 
 ### Architecture
 - MVC pattern with controllers, models, routes
@@ -105,7 +105,7 @@ Get QR code for shortened URL
 - Rate limiting
 - No sensitive data exposure
 
-## Performance Optimizations ⚡
+## Performance Optimizations 
 
 - Database indexes for fast lookups
 - Minimal dependencies
@@ -113,17 +113,3 @@ Get QR code for shortened URL
 - CSS animations with GPU acceleration
 - Lazy loading ready
 
-## Future Enhancements 🚀
-
-- [ ] Redis caching layer
-- [ ] User authentication
-- [ ] Link management dashboard
-- [ ] Bulk URL shortening
-- [ ] API key system
-- [ ] Advanced analytics (geolocation, devices)
-- [ ] Custom domains
-- [ ] Link preview generation
-
-## License
-
-MIT
