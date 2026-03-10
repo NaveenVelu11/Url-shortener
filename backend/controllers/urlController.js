@@ -2,6 +2,14 @@ const { nanoid } = require("nanoid");
 const Url = require("../models/Url");
 const { isValidUrl } = require("../utils/validators");
 
+const getBaseUrl = (req) => {
+  if (process.env.BASE_URL && !process.env.BASE_URL.includes('your-domain.com')) {
+    return process.env.BASE_URL;
+  }
+  const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+  return `${protocol}://${req.get('host')}`;
+};
+
 exports.shortenUrl = async (req, res) => {
   try {
     const { originalUrl, customAlias, expiresIn, password, clickLimit } = req.body;
@@ -13,7 +21,7 @@ exports.shortenUrl = async (req, res) => {
     const existing = await Url.findOne({ originalUrl });
     if (existing) {
       return res.json({
-        shortUrl: `${process.env.BASE_URL}/${existing.shortCode}`,
+        shortUrl: `${getBaseUrl(req)}/${existing.shortCode}`,
         shortCode: existing.shortCode
       });
     }
@@ -41,7 +49,7 @@ exports.shortenUrl = async (req, res) => {
     await newUrl.save();
 
     res.status(201).json({
-      shortUrl: `${process.env.BASE_URL}/${shortCode}`,
+      shortUrl: `${getBaseUrl(req)}/${shortCode}`,
       shortCode,
       expiresAt
     });
@@ -134,7 +142,7 @@ exports.generateQR = async (req, res) => {
       }
     };
 
-    const qrCodeDataUrl = await QRCode.toDataURL(`${process.env.BASE_URL}/${shortCode}`, qrOptions);
+    const qrCodeDataUrl = await QRCode.toDataURL(`${getBaseUrl(req)}/${shortCode}`, qrOptions);
 
     res.json({ qrCode: qrCodeDataUrl });
   } catch (error) {

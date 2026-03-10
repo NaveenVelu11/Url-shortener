@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5002';
+const API_URL = (process.env.REACT_APP_API_URL && !process.env.REACT_APP_API_URL.includes('your-domain.com')) 
+  ? process.env.REACT_APP_API_URL 
+  : (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5002');
 
 function App() {
   const [url, setUrl] = useState("");
@@ -105,7 +107,7 @@ function App() {
   const loadQRCode = async (shortCode) => {
     if (!shortCode) return;
     try {
-      const res = await axios.get(`http://localhost:5002/api/qr/${shortCode}?color=${qrColor.replace('#', '')}`);
+      const res = await axios.get(`${API_URL}/api/qr/${shortCode}?color=${qrColor.replace('#', '')}`);
       setQrCode(res.data.qrCode);
     } catch (err) {
       console.error("Failed to load QR code", err);
